@@ -3,7 +3,7 @@
   "version": "0.3.0",
   "description": "Learn something while your AI thinks — ambient microlearning in your terminal, auto-playing one-sentence insights on any topic.",
   "bin": {
-    "drip": "./drip.js"
+    "drip": "drip.js"
   },
   "main": "drip.js",
   "type": "commonjs",
@@ -14,7 +14,7 @@
   "author": "Ian Humes",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ianfh0/drip.git"
+    "url": "git+https://github.com/ianfh0/drip.git"
   },
   "homepage": "https://github.com/ianfh0/drip#readme",
   "bugs": {
