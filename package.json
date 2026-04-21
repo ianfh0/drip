@@ -1,0 +1,41 @@
+{
+  "name": "drip-term",
+  "version": "0.3.0",
+  "description": "Learn something while your AI thinks — ambient microlearning in your terminal, auto-playing one-sentence insights on any topic.",
+  "bin": {
+    "drip": "./drip.js"
+  },
+  "main": "drip.js",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "author": "Ian Humes",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ianfh0/drip.git"
+  },
+  "homepage": "https://github.com/ianfh0/drip#readme",
+  "bugs": {
+    "url": "https://github.com/ianfh0/drip/issues"
+  },
+  "keywords": [
+    "cli",
+    "tui",
+    "learning",
+    "microlearning",
+    "ai",
+    "claude",
+    "claude-code",
+    "anthropic",
+    "waiting",
+    "ambient",
+    "drip"
+  ],
+  "files": [
+    "drip.js",
+    "README.md",
+    "LICENSE"
+  ]
+}
