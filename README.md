@@ -2,6 +2,10 @@
 
 **Learn something while your AI thinks.**
 
+<p align="center">
+  <img src="demo.gif" alt="drip demo — one-sentence insights rotating in a terminal" width="720">
+</p>
+
 A terminal companion for the 5–10 minutes you spend waiting on Claude Code, Cursor, or any long-running agent. Type a topic, pick a level, and drip shows you one-sentence insight cards — one at a time, one on screen. A new drip replaces the last every 10 seconds. Glance over when your brain has a second.
 
 One file. Zero runtime deps. Node 18+. MIT.
