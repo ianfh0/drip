@@ -10,18 +10,21 @@ One file. Zero runtime deps. Node 18+. MIT.
 
 ## Run
 
+Install and run directly from GitHub — no npm registry needed:
+
 ```bash
-npx drip-term                               # interactive onboarding
-npx drip-term "diffusion models"            # topic given, picks level interactively
-npx drip-term "rust borrow checker" -l advanced
-npx drip-term "Thinking, Fast and Slow"     # a book title works as a topic
+npx github:ianfh0/drip                                    # interactive onboarding
+npx github:ianfh0/drip "diffusion models"                 # topic given, picks level
+npx github:ianfh0/drip "rust borrow checker" -l advanced  # fully specified
+npx github:ianfh0/drip "Thinking, Fast and Slow"          # a book title works as a topic
 ```
 
-Or install it:
+Or clone it:
 
 ```bash
-npm i -g drip-term
-drip "distributed consensus"
+git clone https://github.com/ianfh0/drip.git
+cd drip
+./drip.js
 ```
 
 The first time you run drip, it walks you through Claude auth in 30 seconds (see below). After that, it just starts.
