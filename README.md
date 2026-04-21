@@ -2,7 +2,7 @@
 
 **Learn something while your AI thinks.**
 
-A terminal companion for the 5-10 minutes you spend waiting on Claude Code, Cursor, or any long-running agent. Type a topic, pick a level, and drip shows you one-sentence insight cards — one at a time, one on screen. A new drip replaces the last every 30 seconds. Glance over when your brain has a second.
+A terminal companion for the 5–10 minutes you spend waiting on Claude Code, Cursor, or any long-running agent. Type a topic, pick a level, and drip shows you one-sentence insight cards — one at a time, one on screen. A new drip replaces the last every 10 seconds. Glance over when your brain has a second.
 
 One file. Zero runtime deps. Node 18+. MIT.
 
@@ -24,9 +24,11 @@ npm i -g drip-term
 drip "distributed consensus"
 ```
 
+The first time you run drip, it walks you through Claude auth in 30 seconds (see below). After that, it just starts.
+
 ---
 
-## Controls (three keys)
+## Controls
 
 **Drips auto-play every 10 seconds.** You don't have to press anything.
 
@@ -41,68 +43,57 @@ One card at a time, one good rhythm. No feed, no scroll, no settings.
 
 ---
 
-## Auth — bring your own, auto-detected
+## Auth — guided on first run
 
-drip uses your own Claude auth and never sees your key or your prompts. Two paths, auto-detected at startup:
+First time you run drip, it asks one question and walks you through setup. No commands to memorize. Two paths:
 
-### Path 1 — `claude` CLI (free with Pro/Max)
+### Claude Pro or Max — free, no per-drip cost
 
-If you already have Claude Code signed in, drip just works.
+drip installs `@anthropic-ai/claude-code` for you, probes whether you're already signed in (common — just continues), and otherwise launches Claude Code once for you to sign in via browser. Then drip starts automatically.
 
-```bash
-# if you don't:
-npm i -g @anthropic-ai/claude-code
-claude                                   # follow the login prompts
-drip                                     # auto-detects the signed-in CLI
-```
+### Anthropic API key — pay-per-drip (~$0.003 each)
 
-No per-drip cost. drip shells out to `claude -p` under the hood.
+drip opens the API key page in your browser. You paste the key at the prompt, drip offers to save it to your shell rc (`~/.zshrc` / `~/.bashrc` / fish config) so it persists, and drip starts automatically.
 
-### Path 2 — Anthropic API key (pay-per-drip)
+**drip never sees or stores your key.** Everything is client-side. No backend, no proxy, no accounts, no telemetry. The package has zero runtime dependencies — if this repo disappeared tomorrow, your existing install would keep running.
 
-```bash
-# get a key at https://console.anthropic.com/settings/keys
-export ANTHROPIC_API_KEY=sk-ant-...
-drip
-```
-
-Costs about **$0.003 per drip** on Sonnet (~$0.45 for 150 drips — a full hour of auto-play). You pay Anthropic directly. drip never proxies or stores it.
-
-### No backend, no accounts
-
-No signup, no waitlist, no telemetry. drip is a pure client-side wrapper. The package has zero runtime dependencies. If this repo disappeared tomorrow, your existing install would still run.
+Cost reality for the API key path: Sonnet with prompt caching lands around **$0.003 per drip**. A full hour of 10-second auto-play (360 drips) is about $1.
 
 ---
 
-## How the drip is shaped
+## The drip format
 
-One sentence. Max 25 words. No title, no bullets. Concrete — numbers, names, mechanisms. Stands alone.
+One sentence. 8–10 words. No title, no bullets. Concrete — a number, a name, a mechanism, or a surprise. Stands alone.
 
-> A transformer layer is just matrix multiplication plus a nonlinearity, stacked 50+ times with trillions of tuned parameters — that's the whole trick.
+> GPT is matrix multiplication plus a nonlinearity, stacked 50 times.
 
-> Sloths climb down from trees once a week just to poop — and roughly half of all wild sloth deaths happen during that weekly descent.
+> Models generalize thousands of steps after overfitting — nobody knows why.
 
-> Kahneman's thesis: System 1 runs constantly and cheap, while System 2's slow deliberate thinking only engages when System 1 flags something weird.
+> Wild sloths mostly die descending trees to poop each week.
+
+> System 2 only engages when System 1 flags something weird.
+
+Reading time for a fast reader: about 2 seconds. Tuned to be absorbed at a glance, not to demand your attention.
 
 ---
 
 ## Difficulty levels
 
-- **beginner** — plain language, zero background assumed. Vivid, surprising.
-- **intermediate** — mechanisms, specific numbers, named concepts. Past the Wikipedia lead.
-- **advanced** — senior-practitioner depth. Named effects, researchers, edge cases.
+- **beginner** — plain English, zero jargon. Vivid mental models, not definitions. Written for a curious friend who's heard of the topic but never studied it.
+- **intermediate** — assume basics are known. Named concepts, specific numbers, mechanisms, trade-offs. Written for a practitioner warming up.
+- **advanced** — senior-practitioner depth. Named effects, specific researchers, recent developments, surprising edge cases. Written for someone who wants the interesting stuff.
 
-Depth also progresses *within* a session — drip #1 is foundational, drip #50 is nuanced.
+Depth also progresses *within* a session — drip #1 is foundational, drip #50 reaches the frontier. Each drip stands alone, but they flow like a smart friend's walk-through of the topic.
 
 ---
 
-## Generation (the part that matters)
+## Under the hood
 
-- **One drip = one streaming API call.** First token arrives in ~400ms on Sonnet; full drip in 1-2s. You watch it paint live.
-- **Lookahead generation.** While you read the current drip, the next one is already being generated in the background. Pressing `space` is always instant after the first card.
-- **Prompt caching.** The system prompt is reused across every drip — after the first call, subsequent ones get 90% off on the cached portion.
+- **Instant advance.** A lookahead buffer pre-generates the next drip in the background the moment the current one lands. When the 10-second tick fires (or you press <kbd>space</kbd>), the next drip is already sitting there — no loading, no spinner.
+- **Streaming.** The very first drip of a session streams in live, typewriter-style. Everything after that is pre-generated and displays instantly.
+- **Prompt caching.** The system prompt is identical across every drip, so Anthropic caches it — 90% off on the cached portion after the first call.
 - **Idle pause.** No input for 90 seconds and drip stops generating. Resumes on the next keypress. Your API budget doesn't burn while you're tabbed out.
-- **No repeats.** A rolling list of already-shown drips goes back to the model so it never restates itself.
+- **No repeats.** A rolling list of already-shown drips goes back to the model, so it doesn't restate itself.
 
 ---
 
@@ -119,7 +110,7 @@ DRIP_MODEL=opus  drip "category theory"       # slower, denser
 
 ## What drip is — and isn't
 
-A weekend hack for developers waiting on AI. MIT, zero-dep Node. No infra, no backend, no keys drip sees, no accounts, no telemetry, no waitlist. Fork it, extend it, ignore it.
+A weekend hack for anyone waiting on AI. MIT, zero-dep Node. No infra, no backend, no keys drip sees, no accounts, no telemetry, no waitlist. Fork it, extend it, ignore it.
 
 Maintained: best effort. No roadmap. PRs welcome; no promises.
 
